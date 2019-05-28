@@ -15,7 +15,15 @@ public class StringsAndThings {
      *           countYZ("day fyyyz"); // Should return 2
      */
     public Integer countYZ(String input){
-        return null;
+        Integer counter = 0;
+        for (Integer i = 0; i < input.length()-1; i++)
+            if(input.charAt(i) == 'y' || input.charAt(i) == 'z')
+                if(!Character.isLetter(input.charAt(i+1)))
+                    counter++;
+
+        if(input.endsWith("y") || input.endsWith("z"))
+            counter++;
+        return counter;
     }
 
     /**
@@ -28,7 +36,8 @@ public class StringsAndThings {
      *           removeString("Hello there", "x") // Should return "Hello there"
      */
     public String removeString(String base, String remove){
-        return null;
+        String[] resultInArray = base.split(remove);
+        return String.join("",resultInArray);
     }
 
     /**
@@ -40,7 +49,7 @@ public class StringsAndThings {
      *           containsEqualNumberOfIsAndNot("noisxxnotyynotxisi") // Should return true
      */
     public Boolean containsEqualNumberOfIsAndNot(String input){
-        return null;
+        return countWord(input,"is") == countWord(input,"not");
     }
 
     /**
@@ -51,7 +60,21 @@ public class StringsAndThings {
      *           gHappy("xxggyygxx") // Should return  false
      */
     public Boolean gIsHappy(String input){
-        return null;
+
+        if(input.charAt(0)=='g')
+            if(input.charAt(1)!='g')
+                return false;
+
+        for (Integer i = 1; i < input.length()-1; i++)
+            if(input.charAt(i)=='g')
+                if(input.charAt(i-1)!='g' && input.charAt(i+1)!='g')
+                    return false;
+
+        if(input.charAt(input.length()-1)=='g')
+            if(input.charAt(input.length()-2)!='g')
+                return false;
+
+        return true;
     }
 
 
@@ -63,6 +86,34 @@ public class StringsAndThings {
      *            countTriple("a") // Should return 0
      */
     public Integer countTriple(String input){
-        return null;
+        if(input.length()<3)
+            return 0;
+
+        Integer counter = 0;
+        for(Integer i = 0; i < input.length()-2; i++)
+            if (input.charAt(i) == input.charAt(i+1) && input.charAt(i) == input.charAt(i+2))
+                counter++;
+
+        return counter;
+    }
+
+    /**
+    * This method count overlapping word
+    */
+    private Integer countWord(String base, String word)
+    {
+        Integer count = 0;
+        Integer indexAt = 0;
+
+        while(indexAt != -1) {
+            indexAt = base.indexOf(word, indexAt);  // get the index of next word
+            if (indexAt != -1)
+            {
+                count++;
+                indexAt++;  // add 1 so we won't be search at same word
+            }
+        }
+        return count;
     }
 }
+
